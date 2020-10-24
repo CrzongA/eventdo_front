@@ -42,11 +42,25 @@ idn: i dunno a thing
   }
 }
 
+.page-background{
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(white, grey, black);
+}
+
+.carousel-td{
+  overflow-x: scroll;
+}
+
+.carousel-lr{
+  overflow-x: scroll;
+}
 
 .card{
   background: white;
   border-radius: 3px;
-  box-shadow: 10px 5px 5px grey;
+  box-shadow: 10px 10px 5px grey;
 }
 
 .idnbutton{

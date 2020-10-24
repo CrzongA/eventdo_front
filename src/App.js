@@ -27,6 +27,7 @@ class App extends React.Component {
     this.initRole = this.initRole.bind(this)
     this.checkAccType = this.checkAccType.bind(this)
     this.loadRegistration = this.loadRegistration.bind(this)
+    this.registerEvent = this.registerEvent.bind(this)
   }
 
   componentDidMount(){
@@ -106,7 +107,7 @@ class App extends React.Component {
           handleSubmit={this.initRole}/>
     }
     else{
-      ret = <h1>Loading...</h1>
+      ret = <div className={"page-background"}><h1>Loading...</h1></div>
     }
     return ret;
   }
@@ -120,7 +121,7 @@ class App extends React.Component {
           const events = JSON.parse(http.responseText);
           this.setState({carditems: events});
           this.checkAccType()
-          console.log(events);
+          // console.log(events);
         }
     })
   }
@@ -149,11 +150,26 @@ class App extends React.Component {
         const eventdetails = JSON.parse(http.responseText);
         // this.setState({carditems: eventdetails});
         console.log(eventdetails);
+        this.setState({popup:
+              <Registration details={eventdetails} handler={this.registerEvent}/>
+        })
       }
     })
-    this.setState({popup:
-    <Registration children={}/>
-  })
+  }
+
+  registerEvent(answers){
+    // console.log(answers)
+    let data={
+      id: this.state.userid,
+      code: '405445',
+      question: answers
+    }
+    this.request("POST", `${this.state.serverAddr}/reg_event`, JSON.stringify(data), (http) => {
+      http.setRequestHeader('Content-type', 'application/json');
+    }, (http) => {});
+    console.log("registered")
+    this.setState({popup: null})
+    this.retrieveData()
   }
 
   loadEventDetail(){
@@ -164,6 +180,7 @@ class App extends React.Component {
     return (
       <div className="App">
         {this.loadByRole()}
+        {this.state.popup}
       </div>
     )
   }

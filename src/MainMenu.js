@@ -16,14 +16,13 @@ class MainMenu extends React.Component{
     }
 
     cards() {
-        let items = [], item = {}, carditems = this.props.cardItems, index = 0;
+        let items = [], item = {}, carditems = this.props.cardItems;
         if (typeof this.props.cardItems != "undefined") {
-            console.log(carditems)
-            for (index in carditems) {
+            for (let index=0; index<carditems.length; index++) {
+                console.log(index)
                 items.push(
                     <Card event={carditems[index]} key={index}/>
                 )
-                index++
             }
             console.log(carditems[item]);
         }
@@ -37,8 +36,8 @@ class MainMenu extends React.Component{
                 <h2>Welcome, User {this.props.username}</h2>
                 <h3></h3>
                 <br/>
-                <div className={'cards-wrapper'}>{this.cards()}</div>
-                <button className={'idnbutton'}><p className={'idnbutton-text'} onClick={this.props.loadRegistration()}>New Event</p></button>
+                <div className={'carousel-td'}>{this.cards()}</div>
+                <button className={'idnbutton'}><p className={'idnbutton-text'} onClick={this.props.loadRegistration}>New Event</p></button>
             </div>
         )
     }
