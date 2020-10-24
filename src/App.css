@@ -1,3 +1,8 @@
+/*
+naming convetion: 
+idn: i dunno a thing
+*/
+
 .App {
   text-align: center;
 }
@@ -35,4 +40,21 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+.card{
+  background: white;
+  border-radius: 3px;
+  box-shadow: 10px 5px 5px grey;
+}
+
+.idnbutton{
+  width: 10em;
+  height: 3em;
+  font-size: 1em;
+}
+
+.idnbutton-text{
+  margin: auto;
 }
