@@ -9,9 +9,14 @@ class MainMenu extends React.Component{
         this.cards = this.cards.bind(this)
     }
 
+
+    componentDidMount() {
+
+    }
+
     cards(){
         let items=[], item={}, carditems = this.props.cardItems, i=0
-        if (typeof this.props.cardItems!= "undefined"){
+        if (typeof this.props.cardItems != "undefined"){
             console.log(carditems)
             for (item in carditems){
             items.push(

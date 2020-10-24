@@ -28,22 +28,24 @@ class App extends React.Component {
           if(!liff.isLoggedIn())
             liff.login();
           else {
-            console.log(liff.getDecodedIDToken())
+            this.retrieveData();
           }
         })
         .catch((err)=>{})
       }
     })
-    
-
-    // let status = liff.isLoggedIn
-    // console.log("liff is " + status)
-    
   }
 
 
-  retrieveData(liff){
-    
+  retrieveData(){
+    const token = liff.getDecodedIDToken();
+    const userID = "samuel"; //token.sub;
+    request("GET", `${this.state.serverAddr}/query-user-event/?userID=${userID}`, undefined, undefined, (http) => {
+        if (http.readyState == 4 && http.status == 200) {
+          const events = JSON.parse(http.responseText);
+          console.log(events);
+        }
+    })
   }
 
   render(){
