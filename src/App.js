@@ -1,13 +1,14 @@
 import './App.css';
 import MainMenu from './MainMenu';
 import React from "react";
+import ReactDOM from 'react-dom';
 import liff from '@line/liff'
 
 class App extends React.Component {
   constructor(){
     super();
     this.state = {
-      carditems:[{name:"meichuhack", date: '20201024', id:10231234},],
+      carditems: [],
       serverAddr: 'http://44f856664f6d.ngrok.io'
     }
     this.retrieveData = this.retrieveData.bind(this)
@@ -15,7 +16,6 @@ class App extends React.Component {
 
   componentDidMount(){
     // test data, disable in production!!
-    this.setState({carditems:[{name:"meichuhack", date: '20201024', id:10231234},]})
     request("GET", `${this.state.serverAddr}/liff-id`, undefined, undefined, (http) => {
       if (http.readyState == 4 && http.status == 200) {
         const liffid = JSON.parse(http.responseText);
@@ -42,6 +42,7 @@ class App extends React.Component {
     request("GET", `${this.state.serverAddr}/query-user-event/?userID=${userID}`, undefined, undefined, (http) => {
         if (http.readyState == 4 && http.status == 200) {
           const events = JSON.parse(http.responseText);
+          this.setState({carditems: events});
           console.log(events);
         }
     })

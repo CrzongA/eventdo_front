@@ -1,10 +1,10 @@
 import React from "react";
-
+import Card from "./Card";
 class MainMenu extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-
+            cardItems: []
         }
         this.cards = this.cards.bind(this)
     }
@@ -14,30 +14,29 @@ class MainMenu extends React.Component{
 
     }
 
-    cards(){
-        let items=[], item={}, carditems = this.props.cardItems, i=0
+    handleNewEvent(){
+        
+    }
+
+    refreshCards(list) {
+        this.state({
+            cardItems: list
+        })
+    }
+    cards() {
+        let items=[], item={}, carditems = this.props.cardItems, index = 0;
         if (typeof this.props.cardItems != "undefined"){
             console.log(carditems)
-            for (item in carditems){
-            items.push(
-                <div className={'card'} key={i}>
-                    <span><p>{carditems[item].name}</p></span>
-                    <span><p>{carditems[item].date}</p></span>
-                    <span><p>{carditems[item].id}</p></span>
-                    {/* <span><p></p></span> */}
-                </div>
-            )
-            i++
+            for (index in carditems){
+                items.push(
+                    <Card event={carditems[index]} key={index}/>
+                )
+                index++
             }
             console.log(carditems[item]);
         }
         return items
     }
-
-    handleNewEvent(){
-        
-    }
-
     render(){
         return (
             <div className={"page-background"}>
