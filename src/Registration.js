@@ -1,23 +1,16 @@
 import React from "react";
 
-class Registration extends React.Component{
-    constructor(props){
+class Registration extends React.Component {
+    constructor(props) {
         super(props);
-        this.state = {
+        this.state={
 
         }
     }
 
+    render() {
 
-
-    render(){
-        return(
-            <div className={"page-background"}>
-
-            </div>
-        )
     }
-
 }
 
 export default Registration

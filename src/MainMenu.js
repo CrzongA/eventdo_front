@@ -1,5 +1,6 @@
 import React from "react";
 import Card from "./Card";
+
 class MainMenu extends React.Component{
     constructor(props){
         super(props);
@@ -11,23 +12,14 @@ class MainMenu extends React.Component{
 
 
     componentDidMount() {
-
+        this.props.retrieveData()   //todo: replace blank with userid later
     }
 
-    handleNewEvent(){
-        
-    }
-
-    refreshCards(list) {
-        this.state({
-            cardItems: list
-        })
-    }
     cards() {
-        let items=[], item={}, carditems = this.props.cardItems, index = 0;
-        if (typeof this.props.cardItems != "undefined"){
+        let items = [], item = {}, carditems = this.props.cardItems, index = 0;
+        if (typeof this.props.cardItems != "undefined") {
             console.log(carditems)
-            for (index in carditems){
+            for (index in carditems) {
                 items.push(
                     <Card event={carditems[index]} key={index}/>
                 )
@@ -37,13 +29,16 @@ class MainMenu extends React.Component{
         }
         return items
     }
+
+
     render(){
         return (
             <div className={"page-background"}>
-                <h2>Events</h2>
+                <h2>Welcome, User {this.props.username}</h2>
+                <h3></h3>
                 <br/>
                 <div className={'cards-wrapper'}>{this.cards()}</div>
-                <button className={'idnbutton'}><p className={'idnbutton-text'}>New Event</p></button>
+                <button className={'idnbutton'}><p className={'idnbutton-text'} onClick={this.props.loadRegistration()}>New Event</p></button>
             </div>
         )
     }

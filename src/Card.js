@@ -8,23 +8,34 @@ class Card extends React.Component{
         }
     }
 
-
     componentDidMount() {
-
+        console.log(this.props.event)
     }
 
 
-
-
     render(){
-        return (
-            <div className={'card'}>
-                <span><p>{this.props.event.title}</p></span>
-                <span><p>{this.props.event.time}</p></span>
-                <span><p>{this.props.event.id}</p></span>
-                {/* <span><p></p></span> */}
-            </div>
-        )
+        let reg, checkin
+        if (this.props.event.hasOwnProperty('checkin')) {
+            return (
+                <div className={'card'}>
+                    <span><p>{this.props.event.name}</p></span>
+                    <span><p>{this.props.event.time}</p></span>
+                    <span><p>{this.props.event.description}</p></span>
+                    <span><p>{this.props.event.reg}</p></span>
+                    <span><p>{this.props.event.checkin}</p></span>
+                    {/* <span><p></p></span> */}
+                </div>
+            )
+        }else {
+            return (
+                <div className={'card'}>
+                    <span><p>{this.props.event.name}</p></span>
+                    <span><p>{this.props.event.time}</p></span>
+                    <span><p>{this.props.event.description}</p></span>
+                    {/* <span><p></p></span> */}
+                </div>
+            )
+        }
     }
 }
 
