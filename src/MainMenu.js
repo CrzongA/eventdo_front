@@ -40,7 +40,7 @@ class MainMenu extends React.Component{
 
     render(){
         return (
-            <div>
+            <div className={"page-background"}>
                 <h2>Events</h2>
                 <br/>
                 <div className={'cards-wrapper'}>{this.cards()}</div>
