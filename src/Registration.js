@@ -40,7 +40,7 @@ class Registration extends React.Component {
 
     render() {
         return(
-            <div className={'page-background'}>
+            <div className={'page-background'} style={{'zIndex':this.props.order}}>
                 <h2>New Event Registration</h2>
                 <h3>{this.props.details.name}</h3>
                 <br/>

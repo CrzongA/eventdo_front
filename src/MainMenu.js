@@ -19,7 +19,7 @@ class MainMenu extends React.Component{
         let items = [], item = {}, carditems = this.props.cardItems;
         if (typeof this.props.cardItems != "undefined") {
             for (let index=0; index<carditems.length; index++) {
-                console.log(index)
+                console.log(carditems)
                 items.push(
                     <Card event={carditems[index]} key={index}/>
                 )

@@ -43,10 +43,14 @@ idn: i dunno a thing
 }
 
 .page-background{
+  position: absolute;
+  top:0;
+  left:0;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
   background: linear-gradient(white, grey, black);
+  z-index: 0;
 }
 
 .carousel-td{
@@ -71,4 +75,9 @@ idn: i dunno a thing
 
 .idnbutton-text{
   margin: auto;
+}
+
+.add{
+  width:1.8em;
+  height:1.8em;
 }

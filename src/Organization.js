@@ -1,5 +1,6 @@
 import React from "react";
 import Card from "./Card";
+import NewEvent from "./NewEvent";
 
 class Organization extends React.Component{
     constructor(props){
@@ -36,6 +37,7 @@ class Organization extends React.Component{
             <div className={"page-background"}>
                 <h2>Welcome, Organization {this.props.username}</h2>
                 <div className={"content"}>{this.loadRegistration}</div>
+                <button onClick={this.props.loadNewEvent}>Create New Event</button>
             </div>
         )
     }

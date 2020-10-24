@@ -1,12 +1,17 @@
 import React from "react";
 import ReactDOM from 'react-dom';
 import liff from '@line/liff'
+
 import MainMenu from './MainMenu';
 import Organization from './Organization'
 import NewUser from "./NewUser";
+import NewEvent from "./NewEvent";
+import Registration from "./Registration";
 
 import './App.css'
-import Registration from "./Registration";
+
+let CODE = -1;
+let queryCode = -1;
 
 class App extends React.Component {
   constructor(){
@@ -28,6 +33,8 @@ class App extends React.Component {
     this.checkAccType = this.checkAccType.bind(this)
     this.loadRegistration = this.loadRegistration.bind(this)
     this.registerEvent = this.registerEvent.bind(this)
+    this.loadNewEvent = this.loadNewEvent.bind(this)
+    this.newEvent = this.newEvent.bind(this)
   }
 
   componentDidMount(){
@@ -85,8 +92,13 @@ class App extends React.Component {
 
   loadByRole(){
     let ret;
+
     if (this.state.role=='1' && !this.state.loading){  //personal
-      ret = <MainMenu
+        queryCode = (new URLSearchParams(window.location.search)).get('code');
+        if (queryCode != null) {
+          CODE = queryCode;
+        }
+        ret = <MainMenu
           username={this.state.username}
           cardItems={this.state.carditems}
           request={this.request}
@@ -98,6 +110,7 @@ class App extends React.Component {
       ret = <Organization
           username={this.state.username}
           request={this.request}
+          loadNewEvent={this.loadNewEvent}
           serverAddr={this.state.serverAddr}
       />
     }
@@ -112,6 +125,7 @@ class App extends React.Component {
     return ret;
   }
 
+  // retrieve latest event and user data
   retrieveData(i_userid){
     // const token = liff.getDecodedIDToken();
     // const userID = "samuel2"; //token.sub;
@@ -143,31 +157,57 @@ class App extends React.Component {
 
   }
 
-
   loadRegistration(){
-    this.request("GET", `${this.state.serverAddr}/reg_event/?code=405445`, undefined, undefined, (http) => {
+    this.request("GET", `${this.state.serverAddr}/reg_event/?code=${CODE}`, undefined, undefined, (http) => {
       if (http.readyState == 4 && http.status == 200) {
         const eventdetails = JSON.parse(http.responseText);
         // this.setState({carditems: eventdetails});
         console.log(eventdetails);
         this.setState({popup:
-              <Registration details={eventdetails} handler={this.registerEvent}/>
+              <Registration details={eventdetails} handler={this.registerEvent} order={'2'}/>
         })
       }
     })
   }
 
-  registerEvent(answers){
+  loadNewEvent(){
+    this.setState({popup:
+      <NewEvent userid={this.state.userid} handler={this.newEvent} order={'2'}/>
+    })
+  }
+
+  registerEvent(answers, code){
     // console.log(answers)
     let data={
       id: this.state.userid,
-      code: '405445',
+      code: CODE,
       question: answers
     }
     this.request("POST", `${this.state.serverAddr}/reg_event`, JSON.stringify(data), (http) => {
       http.setRequestHeader('Content-type', 'application/json');
     }, (http) => {});
     console.log("registered")
+    this.setState({popup: null})
+    this.retrieveData()
+  }
+
+  newEvent(qs){
+    let data={
+      id: this.state.userid,
+      time: qs.time,
+      name: qs.name,
+      description: qs.description,
+      question:qs.questions
+    }
+    this.request("POST", `${this.state.serverAddr}/create_event`, JSON.stringify(data), (http) => {
+      http.setRequestHeader('Content-type', 'application/json');
+    }, (http) => {
+        if (http.readyState == 4 && http.status == 200) {
+          let code = http.responseText
+        }
+      }
+    );
+    console.log("new event created")
     this.setState({popup: null})
     this.retrieveData()
   }
